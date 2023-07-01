@@ -2,9 +2,8 @@ const path = require('path');
 const webpack = require('webpack');
 
 module.exports = {
-  entry: {
-    server: './src/main.server.ts',
-  },
+  mode: 'production',
+  entry: './src/main.server.ts',
   resolve: {
     extensions: ['.js', '.ts'],
   },
@@ -12,7 +11,7 @@ module.exports = {
   externals: [/node_modules/],
   output: {
     path: path.join(__dirname, 'dist', 'server'),
-    filename: '[name].js',
+    filename: 'main.js',
   },
   module: {
     rules: [
