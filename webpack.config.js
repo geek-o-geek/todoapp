@@ -1,25 +1,30 @@
 const path = require('path');
-const webpack = require('webpack');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
+const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 
 module.exports = {
+  entry: './src/main.ts',
   mode: 'production',
-  entry: './src/main.server.ts',
-  resolve: {
-    extensions: ['.js', '.ts'],
-  },
-  target: 'node',
-  externals: [/node_modules/],
   output: {
-    path: path.join(__dirname, 'dist', 'server'),
-    filename: 'main.js',
+    path: path.resolve(__dirname, 'dist'),
+    filename: 'bundle.js',
+  },
+  resolve: {
+    extensions: ['.ts', '.js'],
   },
   module: {
     rules: [
-      // Include necessary loaders for TypeScript, CSS, etc.
+      {
+        test: /\.ts$/,
+        use: 'ts-loader',
+        exclude: /node_modules/,
+      },
     ],
   },
   plugins: [
-    // Include necessary plugins for optimization, etc.
-    new webpack.optimize.ModuleConcatenationPlugin(),
+    new CleanWebpackPlugin(),
+    new HtmlWebpackPlugin({
+      template: './src/index.html',
+    }),
   ],
 };
